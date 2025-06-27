@@ -8,7 +8,7 @@ from ibm_watsonx_ai.foundation_models import ModelInference
 
 # Step 1: Set credentials
 credentials = Credentials(
-    url="https://us-south.ml.cloud.ibm.com",  # Watsonx endpoint (adjust if needed)
+    url="https://us-south.ml.cloud.ibm.com",  # Watsonx endpoint
     api_key="gJVkYUmdyFqErmxjsr4jFTyoTyKrE6lzCHjX8zCd00ve"
 )
 
@@ -20,7 +20,7 @@ params = {
 }
 
 # Step 3: Select model and project
-model_id = "ibm/granite-3-2b-instruct"  # Or use granite if preferred
+model_id = "ibm/granite-3-2b-instruct"
 project_id = "943be453-c93d-4692-a82e-6b77c2a41503"
 space_id = None
 verify = False
@@ -74,7 +74,7 @@ print("Detected Intent:\n", response)
 
 # Cleaned output
 clean_intent = response["choices"][0]["message"]["content"]
-print("\n🔍 Decoded Customer Intent:")
+print("\n Decoded Customer Intent:")
 print(clean_intent)
 
 

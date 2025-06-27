@@ -2,3 +2,7 @@ ibm_watsonx_ai
 requests
 numpy
 pandas
+google-api-python-client
+google-auth-httplib2
+google-auth-oauthlib
+python-dateutil
