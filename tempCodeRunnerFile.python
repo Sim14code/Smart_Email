@@ -1,0 +1,63 @@
+# %%
+import requests
+
+# %%
+# Replace with your actual values
+API_KEY = "gJVkYUmdyFqErmxjsr4jFTyoTyKrE6lzCHjX8zCd00ve"
+PROJECT_ID = "943be453-c93d-4692-a82e-6b77c2a41503"  # Your Watsonx project ID
+MODEL_ID = "granite-2b-instruct"
+REGION = "us-south"
+
+# %%
+# Email input
+email_body = """
+Hi, I received my order late and one item was missing. Please look into it.
+"""
+
+# Prompt
+prompt = f"""
+Classify the intent of the following customer email into one of the following categories:
+["order_status", "refund_request", "product_inquiry", "technical_support", "complaint", "greeting", "cancellation"]
+
+Email:
+\"\"\"{email_body}\"\"\"
+
+Intent:
+"""
+
+# Watsonx Foundation Model Endpoint
+url = f"https://{REGION}.ml.cloud.ibm.com/ml/v1/fm/infer"
+
+# Request headers
+headers = {
+    "Content-Type": "application/json",
+    "Authorization": f"Bearer {API_KEY}"
+}
+
+# Payload for inference
+payload = {
+    "model_id": MODEL_ID,
+    "project_id": PROJECT_ID,
+    "inputs": [  # Must be a list of strings
+        {
+            "input": prompt,
+            "parameters": {
+                "temperature": 0.0,
+                "decoding_method": "greedy"
+            }
+        }
+    ]
+}
+
+# %%
+# Send request
+response = requests.post(url, headers=headers, json=payload)
+
+# %%
+# Handle response
+if response.status_code == 200:
+    result = response.json()
+    intent = result.get("results", [{}])[0].get("generated_text", "").strip()
+    print(f"Predicted Intent: {intent}")
+else:
+    print(f"Error {response.status_code}: {response.text}")
